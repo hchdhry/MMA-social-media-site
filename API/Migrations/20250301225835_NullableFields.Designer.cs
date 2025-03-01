@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250301225835_NullableFields")]
+    partial class NullableFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,13 +62,13 @@ namespace API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<double?>("Age")
+                    b.Property<double>("Age")
                         .HasColumnType("double precision");
 
                     b.Property<double?>("Height")
                         .HasColumnType("double precision");
 
-                    b.Property<double?>("Losses")
+                    b.Property<double>("Losses")
                         .HasColumnType("double precision");
 
                     b.Property<string>("Name")
@@ -113,7 +116,7 @@ namespace API.Migrations
                     b.Property<double?>("Weight")
                         .HasColumnType("double precision");
 
-                    b.Property<double?>("Wins")
+                    b.Property<double>("Wins")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");

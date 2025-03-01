@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250301225252_AdjustAgeColumnType")]
+    partial class AdjustAgeColumnType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,61 +62,62 @@ namespace API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<double?>("Age")
+                    b.Property<double>("Age")
                         .HasColumnType("double precision");
 
-                    b.Property<double?>("Height")
+                    b.Property<double>("Height")
                         .HasColumnType("double precision");
 
-                    b.Property<double?>("Losses")
+                    b.Property<double>("Losses")
                         .HasColumnType("double precision");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<double?>("Reach")
+                    b.Property<double>("Reach")
                         .HasColumnType("double precision");
 
-                    b.Property<double?>("SignificantStrikeAccuracy")
+                    b.Property<double>("SignificantStrikeAccuracy")
                         .HasColumnType("double precision")
                         .HasColumnName("SigStrAcc");
 
-                    b.Property<double?>("SignificantStrikesLandedPerMinute")
+                    b.Property<double>("SignificantStrikesLandedPerMinute")
                         .HasColumnType("double precision")
                         .HasColumnName("SLpM");
 
                     b.Property<string>("Stance")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<double?>("StrikeDefense")
+                    b.Property<double>("StrikeDefense")
                         .HasColumnType("double precision")
                         .HasColumnName("StrDef");
 
-                    b.Property<double?>("StrikesAbsorbedPerMinute")
+                    b.Property<double>("StrikesAbsorbedPerMinute")
                         .HasColumnType("double precision")
                         .HasColumnName("SApM");
 
-                    b.Property<double?>("SubmissionAverage")
+                    b.Property<double>("SubmissionAverage")
                         .HasColumnType("double precision")
                         .HasColumnName("SubAvg");
 
-                    b.Property<double?>("TakedownAccuracy")
+                    b.Property<double>("TakedownAccuracy")
                         .HasColumnType("double precision")
                         .HasColumnName("TdAcc");
 
-                    b.Property<double?>("TakedownAverage")
+                    b.Property<double>("TakedownAverage")
                         .HasColumnType("double precision")
                         .HasColumnName("TdAvg");
 
-                    b.Property<double?>("TakedownDefense")
+                    b.Property<double>("TakedownDefense")
                         .HasColumnType("double precision")
                         .HasColumnName("TdDef");
 
-                    b.Property<double?>("Weight")
+                    b.Property<double>("Weight")
                         .HasColumnType("double precision");
 
-                    b.Property<double?>("Wins")
+                    b.Property<double>("Wins")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
