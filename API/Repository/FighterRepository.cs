@@ -10,9 +10,32 @@ public class FighterRepository : IFighterRepository
         _dbContext = applicationDBContext;
         
     }
-    public Task<Fighter> CreateFighter(Fighter fighter)
+    public async Task<Fighter> CreateFighter(UpdateFighterDTO fighterDto)
     {
-        throw new NotImplementedException();
+        var fighter = new Fighter
+        {
+            Name = fighterDto.Name,
+            Wins = fighterDto.Wins,
+            Losses = fighterDto.Losses,
+            Height = fighterDto.Height,
+            Weight = fighterDto.Weight,
+            Reach = fighterDto.Reach,
+            Stance = fighterDto.Stance,
+            Age = fighterDto.Age,
+            SignificantStrikesLandedPerMinute = fighterDto.SignificantStrikesLandedPerMinute,
+            SignificantStrikeAccuracy = fighterDto.SignificantStrikeAccuracy,
+            StrikesAbsorbedPerMinute = fighterDto.StrikesAbsorbedPerMinute,
+            StrikeDefense = fighterDto.StrikeDefense,
+            TakedownAverage = fighterDto.TakedownAverage,
+            TakedownAccuracy = fighterDto.TakedownAccuracy,
+            TakedownDefense = fighterDto.TakedownDefense,
+            SubmissionAverage = fighterDto.SubmissionAverage
+        };
+
+        await _dbContext.Fighters.AddAsync(fighter);
+        await _dbContext.SaveChangesAsync();
+
+        return fighter;
     }
 
     public Task<Fighter> DeleteFighter(int id)
