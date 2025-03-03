@@ -24,6 +24,16 @@ public class FighterController:ControllerBase
 
         return Ok(fighter);
     }
+    public async Task<IActionResult> getFighters([FromQuery] QueryObject query)
+    {
+        var fighters = await _fighterRepository.GetFighters(query);
+        if (fighters == null)
+        {
+            return BadRequest("No fighters found");
+        }
+
+        return Ok(fighters);
+    }
     
 
 }
