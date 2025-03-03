@@ -24,6 +24,7 @@ public class FighterController:ControllerBase
 
         return Ok(fighter);
     }
+    [HttpGet]
     public async Task<IActionResult> getFighters([FromQuery] QueryObject query)
     {
         var fighters = await _fighterRepository.GetFighters(query);
@@ -33,6 +34,17 @@ public class FighterController:ControllerBase
         }
 
         return Ok(fighters);
+    }
+    [HttpDelete]
+    public async Task<IActionResult> DeleteFighter(int id)
+    {
+        var fighter = await _fighterRepository.DeleteFighter(id);
+        if (fighter == null)
+        {
+            return BadRequest("Fighter not found");
+        }
+
+        return Ok(fighter);
     }
     
 

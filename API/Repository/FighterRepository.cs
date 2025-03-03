@@ -38,9 +38,16 @@ public class FighterRepository : IFighterRepository
         return fighter;
     }
 
-    public Task<Fighter> DeleteFighter(int id)
+    public async Task<Fighter?> DeleteFighter(int id)
     {
-        throw new NotImplementedException();
+        var fighter = await _dbContext.Fighters.FirstOrDefaultAsync(f => f.Id == id);
+        if (fighter == null)
+        {
+            return null;
+        }
+        _dbContext.Fighters.Remove(fighter);
+        await _dbContext.SaveChangesAsync();
+        return fighter;
     }
 
     public async Task<Fighter> GetFighterByID(int id)
@@ -53,7 +60,7 @@ public class FighterRepository : IFighterRepository
         IQueryable<Fighter> fighters = _dbContext.Fighters;
         if(!string.IsNullOrEmpty(query.NameQuery))
         {
-            fighters = fighters.Where(f=>f.Name.StartsWith(query.NameQuery));
+            fighters = fighters.Where(f=>f.Name.ToLower().StartsWith(query.NameQuery.ToLower()));
         }
         int skipnumber = (query.PageNumber-1) * query.PageSize;
         fighters = fighters.Skip(skipnumber).Take(query.PageSize);
