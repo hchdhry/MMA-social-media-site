@@ -68,8 +68,35 @@ public class FighterRepository : IFighterRepository
         
     }
 
-    public Task<Fighter> UpdateFighter(int id, UpdateFighterDTO fighter)
+    public async Task<Fighter> UpdateFighter(int id, UpdateFighterDTO fighterDto)
     {
-        throw new NotImplementedException();
+        var fighter = await _dbContext.Fighters.FirstOrDefaultAsync(f => f.Id == id);
+        if (fighter == null)
+        {
+            return null;
+        }
+
+      
+        fighter.Name = fighterDto.Name ?? fighter.Name;
+        fighter.Wins = fighterDto.Wins != null ? fighterDto.Wins : fighter.Wins;
+        fighter.Losses = fighterDto.Losses != null ? fighterDto.Losses : fighter.Losses;
+        fighter.Height = fighterDto.Height ?? fighter.Height;
+        fighter.Weight = fighterDto.Weight ?? fighter.Weight;
+        fighter.Reach = fighterDto.Reach ?? fighter.Reach;
+        fighter.Stance = fighterDto.Stance ?? fighter.Stance;
+        fighter.Age = fighterDto.Age ?? fighter.Age;
+        fighter.SignificantStrikesLandedPerMinute = fighterDto.SignificantStrikesLandedPerMinute ?? fighter.SignificantStrikesLandedPerMinute;
+        fighter.SignificantStrikeAccuracy = fighterDto.SignificantStrikeAccuracy ?? fighter.SignificantStrikeAccuracy;
+        fighter.StrikesAbsorbedPerMinute = fighterDto.StrikesAbsorbedPerMinute ?? fighter.StrikesAbsorbedPerMinute;
+        fighter.StrikeDefense = fighterDto.StrikeDefense ?? fighter.StrikeDefense;
+        fighter.TakedownAverage = fighterDto.TakedownAverage ?? fighter.TakedownAverage;
+        fighter.TakedownAccuracy = fighterDto.TakedownAccuracy ?? fighter.TakedownAccuracy;
+        fighter.TakedownDefense = fighterDto.TakedownDefense ?? fighter.TakedownDefense;
+        fighter.SubmissionAverage = fighterDto.SubmissionAverage ?? fighter.SubmissionAverage;
+
+       
+        await _dbContext.SaveChangesAsync();
+        return fighter;
     }
+
 }

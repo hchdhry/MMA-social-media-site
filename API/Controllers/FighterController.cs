@@ -46,6 +46,19 @@ public class FighterController:ControllerBase
 
         return Ok(fighter);
     }
+    [HttpPut]
+    [Route("{id}")]
+
+    public async Task<IActionResult> UpdateFighter([FromRoute]int id, [FromBody] UpdateFighterDTO fighterDto)
+    {
+        var fighter = await _fighterRepository.UpdateFighter(id, fighterDto);
+        if (fighter == null)
+        {
+            return BadRequest("Fighter not found");
+        }
+
+        return Ok(fighter);
+    }
     
 
 }
