@@ -1,4 +1,3 @@
-
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Models
@@ -11,12 +10,9 @@ namespace API.Models
 
         public string Title { get; set; } = string.Empty;
         public string Text { get; set; } = string.Empty;
-       
-        public  Fighter Fighter { get; set; }
-
+        public int CarId { get; set; }
+        public Fighter fighter { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        
 
 
     }
