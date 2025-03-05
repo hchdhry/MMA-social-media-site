@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using API.Data;
 using API.Interfaces;
+using API.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IFighterRepository, FighterRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();    
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
