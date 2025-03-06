@@ -1,4 +1,5 @@
 using API.Data;
+using API.DTO.Fighter;
 using API.Interfaces;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -55,7 +56,7 @@ public class FighterRepository : IFighterRepository
        return await _dbContext.Fighters.FirstOrDefaultAsync(f => f.Id == id);
     }
 
-    public Task<List<Fighter>> GetFighters(QueryObject query)
+    public Task<List<FighterDTO>> GetFighters(QueryObject query)
     {
         IQueryable<Fighter> fighters = _dbContext.Fighters;
         if(!string.IsNullOrEmpty(query.NameQuery))
@@ -64,7 +65,7 @@ public class FighterRepository : IFighterRepository
         }
         int skipnumber = (query.PageNumber-1) * query.PageSize;
         fighters = fighters.Skip(skipnumber).Take(query.PageSize);
-        return fighters.ToListAsync();
+        return fighters.Include(f => f.Comments).Select(f=>f.MapFighterToDTO()).ToListAsync();
         
     }
 

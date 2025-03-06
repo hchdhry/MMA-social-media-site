@@ -13,7 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IFighterRepository, FighterRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();    
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
