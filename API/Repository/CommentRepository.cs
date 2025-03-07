@@ -12,9 +12,19 @@ public class CommentRepository : ICommentRepository
         _DBcontext = context;
         
     }
-    public Task<Comment> CreateComment(Comment comment)
+    public async Task<Comment> CreateComment(CreateCommentDTO comment, int fighterId)
     {
-        throw new NotImplementedException();
+        var newComment = new Comment
+        {
+            FighterId = fighterId,
+            Text = comment.Text,
+            CreatedAt = DateTime.UtcNow,
+            Title = comment.Title
+
+        };
+       await _DBcontext.Comments.AddAsync(newComment);
+        await _DBcontext.SaveChangesAsync();
+        return newComment;
     }
 
     public Task<Comment> DeleteComment(int id)

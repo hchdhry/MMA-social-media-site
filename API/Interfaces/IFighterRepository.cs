@@ -8,4 +8,5 @@ public interface IFighterRepository
     public Task<Fighter> CreateFighter(UpdateFighterDTO fighter);
     public Task<Fighter> UpdateFighter(int id, UpdateFighterDTO fighter);
     public Task<Fighter> DeleteFighter(int id);
+    public Task<Boolean> FighterExists(int id);
 }

@@ -1,3 +1,4 @@
+using API.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Sprache;
@@ -7,9 +8,11 @@ using Sprache;
 public class CommentController:ControllerBase
 {
     private readonly ICommentRepository _commentRepository;
-    public CommentController(ICommentRepository commentRepository)
+    private readonly IFighterRepository _fighterRepository;
+    public CommentController(ICommentRepository commentRepository,IFighterRepository fighterRepository)
     {
         _commentRepository = commentRepository;
+        _fighterRepository = fighterRepository;
     }
     [HttpGet]
     [Route("{fighterId}")]
@@ -22,7 +25,21 @@ public class CommentController:ControllerBase
         }
         return Ok(comments);
     }
- 
+    [HttpPost]
+    public async Task<IActionResult> Create ([FromBody] CreateCommentDTO comment,int fighterId)
+    {
+        if(!await _fighterRepository.FighterExists(fighterId))
+        {
+            return BadRequest("fighter does not exist");
+        }
+        var newComment = await _commentRepository.CreateComment(comment,fighterId);
+        if (newComment == null)
+        {
+            return BadRequest("could not create comment");
+        }
+        return Ok(newComment);
+         
+    }
 
 
 }

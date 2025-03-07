@@ -51,6 +51,11 @@ public class FighterRepository : IFighterRepository
         return fighter;
     }
 
+    public async Task<bool> FighterExists(int id)
+    {
+       return await _dbContext.Fighters.AnyAsync(f => f.Id == id);
+    }
+
     public async Task<Fighter> GetFighterByID(int id)
     {
        return await _dbContext.Fighters.FirstOrDefaultAsync(f => f.Id == id);
@@ -99,5 +104,6 @@ public class FighterRepository : IFighterRepository
         await _dbContext.SaveChangesAsync();
         return fighter;
     }
+    
 
 }
