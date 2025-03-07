@@ -14,4 +14,13 @@ public static class CommentMapper
             CreatedAt = comment.CreatedAt
         };
     }
+    public static CreateCommentDTO ToCreateCommentDTO(this Comment comment)
+    {
+        return new CreateCommentDTO
+        {
+            Title = comment.Title,
+            Text = comment.Text
+        };
+
+    }
 }

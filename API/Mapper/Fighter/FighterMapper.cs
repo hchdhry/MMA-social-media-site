@@ -22,7 +22,8 @@ public static class FighterMapper
             TakedownAccuracy = fighter.TakedownAccuracy,
             TakedownDefense = fighter.TakedownDefense,
             SubmissionAverage = fighter.SubmissionAverage,
-            comments = fighter.Comments
+            Comments = fighter.Comments.Select(comment => comment.ToCreateCommentDTO()).ToList()
         };
     }
+
 }

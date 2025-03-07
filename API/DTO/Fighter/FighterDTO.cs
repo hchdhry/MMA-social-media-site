@@ -1,3 +1,4 @@
+using API.DTO.Comments;
 using API.Models;
 namespace API.DTO.Fighter;
 
@@ -30,5 +31,5 @@ public class FighterDTO
     public double? TakedownDefense { get; set; }
 
     public double? SubmissionAverage { get; set; }
-    public List<Comment> comments { get; set; } = new List<Comment>();
+    public List<CreateCommentDTO> Comments { get; set; } = new List<CreateCommentDTO>();
 }

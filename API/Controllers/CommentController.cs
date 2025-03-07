@@ -15,7 +15,7 @@ public class CommentController:ControllerBase
         _fighterRepository = fighterRepository;
     }
     [HttpGet]
-    [Route("{fighterId}")]
+    
     public async Task<IActionResult> GetCommentsByFighterId([FromRoute]int fighterId)
     {
         var comments = await _commentRepository.GetCommentsByFighterId(fighterId);
@@ -26,7 +26,8 @@ public class CommentController:ControllerBase
         return Ok(comments);
     }
     [HttpPost]
-    public async Task<IActionResult> Create ([FromBody] CreateCommentDTO comment,int fighterId)
+    [Route("{fighterId}")]
+    public async Task<IActionResult> Create ([FromBody] CreateCommentDTO comment,[FromRoute]int fighterId)
     {
         if(!await _fighterRepository.FighterExists(fighterId))
         {
