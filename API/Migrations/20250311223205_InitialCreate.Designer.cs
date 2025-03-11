@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250310222811_addRoles")]
-    partial class addRoles
+    [Migration("20250311223205_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,6 +124,25 @@ namespace API.Migrations
                     b.ToTable("Fighters");
                 });
 
+            modelBuilder.Entity("API.Models.Gym", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("FighterId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Fighter")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "FighterId");
+
+                    b.HasIndex("FighterId");
+
+                    b.ToTable("Gym");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -152,13 +171,13 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f57cd68a-753f-4798-8bb3-46aefc0812ac",
+                            Id = "1212f2f2-2524-4a57-a6f1-285764afa7bd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "215916b3-33f0-44dd-9084-86f65a31e58e",
+                            Id = "d565fb2b-a9a5-464b-aee6-fdabb453c2f2",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -345,6 +364,23 @@ namespace API.Migrations
                     b.Navigation("fighter");
                 });
 
+            modelBuilder.Entity("API.Models.Gym", b =>
+                {
+                    b.HasOne("API.Models.Fighter", null)
+                        .WithMany("gyms")
+                        .HasForeignKey("FighterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("User", "user")
+                        .WithMany("Gyms")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -399,6 +435,13 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Fighter", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("gyms");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.Navigation("Gyms");
                 });
 #pragma warning restore 612, 618
         }

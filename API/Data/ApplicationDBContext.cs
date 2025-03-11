@@ -12,9 +12,12 @@ public class ApplicationDBContext : IdentityDbContext<User>
 
     public DbSet<Fighter> Fighters { get; set; } 
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<Gym> Gyms { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        builder.Entity<Gym>().HasKey(g => new { g.UserId, g.FighterId });
+        builder.Entity<Gym>().HasOne(g => g.user).WithMany(u => u.Gyms).HasForeignKey(g => g.UserId); 
 
     
         List<IdentityRole> roles = new List<IdentityRole>

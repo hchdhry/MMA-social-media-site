@@ -4,34 +4,16 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIdentity : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<double>(
-                name: "Wins",
-                table: "Fighters",
-                type: "double precision",
-                nullable: false,
-                defaultValue: 0.0,
-                oldClrType: typeof(double),
-                oldType: "double precision",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<double>(
-                name: "Losses",
-                table: "Fighters",
-                type: "double precision",
-                nullable: false,
-                defaultValue: 0.0,
-                oldClrType: typeof(double),
-                oldType: "double precision",
-                oldNullable: true);
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -69,6 +51,34 @@ namespace API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Fighters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Wins = table.Column<double>(type: "double precision", nullable: false),
+                    Losses = table.Column<double>(type: "double precision", nullable: false),
+                    Height = table.Column<double>(type: "double precision", nullable: true),
+                    Weight = table.Column<double>(type: "double precision", nullable: true),
+                    Reach = table.Column<double>(type: "double precision", nullable: true),
+                    Stance = table.Column<string>(type: "text", nullable: true),
+                    Age = table.Column<double>(type: "double precision", nullable: true),
+                    SLpM = table.Column<double>(type: "double precision", nullable: true),
+                    SigStrAcc = table.Column<double>(type: "double precision", nullable: true),
+                    SApM = table.Column<double>(type: "double precision", nullable: true),
+                    StrDef = table.Column<double>(type: "double precision", nullable: true),
+                    TdAvg = table.Column<double>(type: "double precision", nullable: true),
+                    TdAcc = table.Column<double>(type: "double precision", nullable: true),
+                    TdDef = table.Column<double>(type: "double precision", nullable: true),
+                    SubAvg = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fighters", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,6 +187,62 @@ namespace API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "text", nullable: false),
+                    Text = table.Column<string>(type: "text", nullable: false),
+                    FighterId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Fighters_FighterId",
+                        column: x => x.FighterId,
+                        principalTable: "Fighters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Gym",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    FighterId = table.Column<int>(type: "integer", nullable: false),
+                    Fighter = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gym", x => new { x.UserId, x.FighterId });
+                    table.ForeignKey(
+                        name: "FK_Gym_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Gym_Fighters_FighterId",
+                        column: x => x.FighterId,
+                        principalTable: "Fighters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "1212f2f2-2524-4a57-a6f1-285764afa7bd", null, "Admin", "ADMIN" },
+                    { "d565fb2b-a9a5-464b-aee6-fdabb453c2f2", null, "User", "USER" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -213,6 +279,16 @@ namespace API.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_FighterId",
+                table: "Comments",
+                column: "FighterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gym_FighterId",
+                table: "Gym",
+                column: "FighterId");
         }
 
         /// <inheritdoc />
@@ -234,26 +310,19 @@ namespace API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "Gym");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.AlterColumn<double>(
-                name: "Wins",
-                table: "Fighters",
-                type: "double precision",
-                nullable: true,
-                oldClrType: typeof(double),
-                oldType: "double precision");
-
-            migrationBuilder.AlterColumn<double>(
-                name: "Losses",
-                table: "Fighters",
-                type: "double precision",
-                nullable: true,
-                oldClrType: typeof(double),
-                oldType: "double precision");
+            migrationBuilder.DropTable(
+                name: "Fighters");
         }
     }
 }

@@ -46,6 +46,7 @@ namespace API.Models
         public double? SubmissionAverage { get; set; }
 
         public List<Comment> Comments { get; set; } = new List<Comment>();
+        public List<Gym> gyms { get; set; } = new List<Gym>();
     }
 }
 
