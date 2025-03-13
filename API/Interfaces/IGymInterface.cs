@@ -3,7 +3,7 @@ using API.Models;
 
 namespace API.Interfaces;
 
-public interface IGymInterface
+public interface IGymRepository
 {
     public Task<List<Gym>> GetAllGymsByUserId();
     public Task<Gym> CreateGym(Gym gym);
