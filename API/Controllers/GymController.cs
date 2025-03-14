@@ -47,10 +47,27 @@ namespace API.Controllers
 
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteGym(Gym gym)
+        public async Task<IActionResult> DeleteGym(int FighterId)
         {
-            var deletedGym = await _gymRepository.DeleteGym(gym);
-            return Ok(deletedGym);
+            var userName = HttpContext.User.getUserName();
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            var fighter = await _fighterRepository.GetFighterByID(FighterId);
+            if (fighter == null)
+            {
+                return NotFound("Fighter not found");
+            }
+            var gym = new Gym
+            {
+                UserId = user.Id,
+                FighterId = fighter.Id
+            };
+            await _gymRepository.DeleteGym(gym);
+            return Ok(gym);
+
         }
         [HttpGet("getall")]
         public async Task<IActionResult> GetAllGymsByUserId()

@@ -32,5 +32,10 @@ public class GymRepository : IGymRepository
         var gyms = await  _dbContext.Gyms.Where(g=>g.UserId == g.UserId).ToListAsync();
         return gyms;
     }
+    public async Task<Gym> GetGymByFighterId(Gym gym)
+    {
+        var gymModel = await _dbContext.Gyms.FirstOrDefaultAsync(g=>g.FighterId == gym.FighterId && g.UserId == gym.UserId);
+        return gym;
+    }
 }
 
