@@ -47,6 +47,7 @@ namespace API.Controllers
 
         }
         [HttpDelete("delete")]
+        [Authorize]
         public async Task<IActionResult> DeleteGym(int FighterId)
         {
             var userName = HttpContext.User.getUserName();
@@ -70,6 +71,7 @@ namespace API.Controllers
 
         }
         [HttpGet("getall")]
+        [Authorize]
         public async Task<IActionResult> GetAllGymsByUserId()
         {
             var gyms = await _gymRepository.GetAllGymsByUserId();

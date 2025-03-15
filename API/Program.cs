@@ -55,6 +55,7 @@ builder.Services.AddSwaggerGen(option =>
 builder.Services.AddIdentity<User, IdentityRole>(Options =>
 {
     Options.Password.RequireLowercase = true;
+    Options.User.RequireUniqueEmail = true;
     Options.Password.RequireDigit = true;
     Options.Password.RequireNonAlphanumeric = true;
 }).AddEntityFrameworkStores<ApplicationDBContext>();
