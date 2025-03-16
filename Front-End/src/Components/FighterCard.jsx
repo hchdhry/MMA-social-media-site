@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState} from 'react';
 import { TokenContext } from './Hero';
 
 const FighterCard = ({ fighterData }) => {

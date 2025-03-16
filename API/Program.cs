@@ -59,6 +59,19 @@ builder.Services.AddIdentity<User, IdentityRole>(Options =>
     Options.Password.RequireDigit = true;
     Options.Password.RequireNonAlphanumeric = true;
 }).AddEntityFrameworkStores<ApplicationDBContext>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact",
+        builder =>
+        {
+            builder
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+
+        });
+});
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme =
@@ -89,6 +102,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowReact");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
