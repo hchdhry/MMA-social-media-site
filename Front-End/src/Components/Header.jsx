@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
     const [userDetails, setUserDetails] = useState({ username: null, role: null });
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    let dropdownTimeout;
 
     useEffect(() => {
         const handleStorageChange = async () => {
@@ -11,9 +13,7 @@ const Header = () => {
                 const jwtToken = localStorage.getItem("token");
                 if (jwtToken) {
                     const decodedToken = await jwtDecode(jwtToken);
-                    const usernameProp = decodedToken.given_name;
-                    const roleProp = decodedToken.role;
-                    setUserDetails({ username: usernameProp, role: roleProp });
+                    setUserDetails({ username: decodedToken.given_name, role: decodedToken.role });
                 } else {
                     setUserDetails({ username: null, role: null });
                 }
@@ -54,14 +54,24 @@ const Header = () => {
                             </Link>
                         </li>
 
-                        <li className="relative group">
+                        <li
+                            className="relative group"
+                            onMouseEnter={() => {
+                                clearTimeout(dropdownTimeout);
+                                setIsDropdownVisible(true);
+                            }}
+                            onMouseLeave={() => {
+                                dropdownTimeout = setTimeout(() => setIsDropdownVisible(false), 500); // Delay hiding by 500ms
+                            }}
+                        >
                             <button className="hover:text-red-500 transition duration-300 flex items-center">
                                 Fighters
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                            <div className="absolute left-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300 z-10">
+                            <div className={`absolute left-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg transition-opacity duration-500 z-10 
+                                ${isDropdownVisible ? "opacity-100 visible" : "opacity-0 invisible"}`}>
                                 <Link to="/fighters" className="block px-4 py-2 text-sm hover:bg-gray-700">
                                     All Fighters
                                 </Link>
