@@ -1,32 +1,42 @@
 import { useState } from 'react';
 
-const FighterCard = ({ fighterData }) => {
+const GymCard = ({ GymData }) => {
     const [showMore, setShowMore] = useState(false);
     const jwtToken = localStorage.getItem("token");
+
+    // Check if GymData and GymData.fighter exist
+    if (!GymData || !GymData.fighter) {
+        return <div className="text-red-500">Error: Missing fighter data</div>;
+    }
+
+    const fighterData = GymData.fighter;
     const fighterId = fighterData.id;
 
     const handleClick = async () => {
-        try {
+        if (!jwtToken) {
+            alert("You must be logged in to perform this action.");
+            return;
+        }
 
-            const response = await fetch(`http://localhost:5211/api/Fighters/create?fighterId=${fighterId}`, {
-                method: "POST",
+        try {
+            const response = await fetch(`http://localhost:5211/api/Gym/delete?FighterId=${fighterId}`, {
+                method: "DELETE",
                 headers: {
                     'Accept': '*/*',
                     'Authorization': `Bearer ${jwtToken}`,
                     'Content-Type': 'application/json'
                 },
-
             });
 
             if (response.ok) {
-                alert('Fighter added to your favorites!');
+                alert('Fighter removed from your favorites!');
             } else {
                 const error = await response.json();
-                alert(`Error adding fighter to favorites: ${error.title}`);
+                alert(`Error removing fighter from favorites: ${error.title}`);
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred while adding the fighter to your favorites.');
+            alert('An error occurred while removing the fighter from your favorites.');
         }
     };
 
@@ -35,8 +45,11 @@ const FighterCard = ({ fighterData }) => {
             <h2 className="text-2xl font-bold mb-2 text-white">{fighterData.name}</h2>
             <p className="text-gray-400 mb-4">Record: {fighterData.wins}-{fighterData.losses}</p>
             {jwtToken && (
-                <button onClick={handleClick} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-300 mb-4">
-                    Add to Gym
+                <button
+                    onClick={handleClick}
+                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-300 mb-4"
+                >
+                    remove from Gym
                 </button>
             )}
             <button
@@ -57,17 +70,29 @@ const FighterCard = ({ fighterData }) => {
 
                     <h3 className="text-xl font-semibold mt-4 mb-2 text-white">Strike Stats</h3>
                     <div className="grid grid-cols-2 gap-2">
-                        <p className="text-gray-400">Significant Strikes/Min: {fighterData.significantStrikesLandedPerMinute?.toFixed(1) || '-'}</p>
-                        <p className="text-gray-400">Strike Accuracy: {fighterData.significantStrikeAccuracy ? `${(fighterData.significantStrikeAccuracy * 100).toFixed(0)}%` : '-'}</p>
-                        <p className="text-gray-400">Strikes Absorbed/Min: {fighterData.strikesAbsorbedPerMinute?.toFixed(1) || '-'}</p>
-                        <p className="text-gray-400">Strike Defense: {fighterData.strikeDefense ? `${(fighterData.strikeDefense * 100).toFixed(0)}%` : '-'}</p>
+                        <p className="text-gray-400">
+                            Significant Strikes/Min: {fighterData.significantStrikesLandedPerMinute?.toFixed(1) || '-'}
+                        </p>
+                        <p className="text-gray-400">
+                            Strike Accuracy: {fighterData.significantStrikeAccuracy ? `${(fighterData.significantStrikeAccuracy * 100).toFixed(0)}%` : '-'}
+                        </p>
+                        <p className="text-gray-400">
+                            Strikes Absorbed/Min: {fighterData.strikesAbsorbedPerMinute?.toFixed(1) || '-'}
+                        </p>
+                        <p className="text-gray-400">
+                            Strike Defense: {fighterData.strikeDefense ? `${(fighterData.strikeDefense * 100).toFixed(0)}%` : '-'}
+                        </p>
                     </div>
 
                     <h3 className="text-xl font-semibold mt-4 mb-2 text-white">Grappling Stats</h3>
                     <div className="grid grid-cols-2 gap-2">
                         <p className="text-gray-400">Takedown Avg: {fighterData.takedownAverage?.toFixed(1) || '-'}</p>
-                        <p className="text-gray-400">Takedown Accuracy: {fighterData.takedownAccuracy ? `${(fighterData.takedownAccuracy * 100).toFixed(0)}%` : '-'}</p>
-                        <p className="text-gray-400">Takedown Defense: {fighterData.takedownDefense ? `${(fighterData.takedownDefense * 100).toFixed(0)}%` : '-'}</p>
+                        <p className="text-gray-400">
+                            Takedown Accuracy: {fighterData.takedownAccuracy ? `${(fighterData.takedownAccuracy * 100).toFixed(0)}%` : '-'}
+                        </p>
+                        <p className="text-gray-400">
+                            Takedown Defense: {fighterData.takedownDefense ? `${(fighterData.takedownDefense * 100).toFixed(0)}%` : '-'}
+                        </p>
                         <p className="text-gray-400">Submission Avg: {fighterData.submissionAverage?.toFixed(1) || '-'}</p>
                     </div>
                 </>
@@ -76,4 +101,4 @@ const FighterCard = ({ fighterData }) => {
     );
 };
 
-export default FighterCard;
+export default GymCard;

@@ -75,8 +75,8 @@ const Header = () => {
                                 <Link to="/fighters" className="block px-4 py-2 text-sm hover:bg-gray-700">
                                     All Fighters
                                 </Link>
-                                <Link to="/favorites" className="block px-4 py-2 text-sm hover:bg-gray-700">
-                                    Your Favorites
+                                <Link to="/Gym" className="block px-4 py-2 text-sm hover:bg-gray-700">
+                                    Your Gym
                                 </Link>
                             </div>
                         </li>

@@ -6,6 +6,7 @@ public static class FighterMapper
     {
         return new FighterDTO
         {
+            Id = fighter.Id,
             Name = fighter.Name,
             Wins = fighter.Wins,
             Losses = fighter.Losses,

@@ -29,7 +29,7 @@ public class GymRepository : IGymRepository
 
     public async Task<List<Gym>> GetAllGymsByUserId()
     {
-        var gyms = await  _dbContext.Gyms.Where(g=>g.UserId == g.UserId).ToListAsync();
+        var gyms = await  _dbContext.Gyms.Where(g=>g.UserId == g.UserId).Include(g=>g.Fighter).ToListAsync();
         return gyms;
     }
     public async Task<Gym> GetGymByFighterId(Gym gym)
