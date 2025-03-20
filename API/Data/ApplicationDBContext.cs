@@ -12,6 +12,7 @@ public class ApplicationDBContext : IdentityDbContext<User>
 
     public DbSet<Fighter> Fighters { get; set; } 
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<UserConnection> UserConnections { get; set; }
     public DbSet<Gym> Gyms { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
