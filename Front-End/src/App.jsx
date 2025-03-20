@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import FighterService from './pages/FighterService';
 import GymService from './pages/GymService';
+import CommentsPage from './pages/CommentsPage';
 
 function App() {
   const router = createBrowserRouter([
@@ -13,7 +14,8 @@ function App() {
     {path:"/login",element:<LoginPage/>},
     {path:"/register",element:<RegisterPage/>},
     {path:"/fighters",element:<FighterService/>},
-    {path:"/Gym",element:<GymService/>}
+    {path:"/Gym",element:<GymService/>},
+    { path:"/Comments/:fighterId",element:<CommentsPage/>}
 
     
   

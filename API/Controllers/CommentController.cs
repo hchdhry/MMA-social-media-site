@@ -15,7 +15,8 @@ public class CommentController:ControllerBase
         _fighterRepository = fighterRepository;
     }
     [HttpGet]
-    
+    [Route("{fighterId}")]
+
     public async Task<IActionResult> GetCommentsByFighterId([FromRoute]int fighterId)
     {
         var comments = await _commentRepository.GetCommentsByFighterId(fighterId);

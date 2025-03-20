@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const GymCard = ({ GymData }) => {
     const [showMore, setShowMore] = useState(false);
@@ -58,6 +59,9 @@ const GymCard = ({ GymData }) => {
             >
                 {showMore ? 'Show Less' : 'Show More'}
             </button>
+            <Link to={`/Comments/${fighterId}`} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-300 mr-2">
+                Comment
+            </Link>
             {showMore && (
                 <>
                     <div className="grid grid-cols-2 gap-2 mt-4">
