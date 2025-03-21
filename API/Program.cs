@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API;
 using API.Services;
 using Microsoft.OpenApi.Models;
+using API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 builder.Services.AddScoped<IFighterRepository, FighterRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IGymRepository, GymRepository>();
@@ -105,6 +107,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowReact");
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<ChatHub>("/chat");
 app.UseHttpsRedirection();
 app.MapControllers();
 

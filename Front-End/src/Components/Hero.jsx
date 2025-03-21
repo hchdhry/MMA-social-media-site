@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext } from 'react';
 import FighterCard from './FighterCard';
+import { Link } from 'react-router-dom';
 
 export const TokenContext = createContext();
 const Hero = () => {
@@ -23,9 +24,12 @@ const Hero = () => {
                                 <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
                                     Join Now
                                 </button>
-                                <button className="border border-white hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
+                                <Link
+                                    to="/events"
+                                    className="border border-white hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-lg transition duration-300"
+                                >
                                     Explore Fights
-                                </button>
+                                </Link>
                             </div>
                         </div>
                         <div className="md:w-1/2 mt-6 md:mt-0">

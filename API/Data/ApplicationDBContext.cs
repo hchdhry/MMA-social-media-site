@@ -17,6 +17,8 @@ public class ApplicationDBContext : IdentityDbContext<User>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        builder.Entity<UserConnection>()
+            .HasKey(uc => uc.ConnectionId);
         builder.Entity<Gym>().HasKey(g => new { g.UserId, g.FighterId });
         builder.Entity<Gym>().HasOne(g => g.user).WithMany(u => u.Gyms).HasForeignKey(g => g.UserId); 
 
@@ -34,8 +36,10 @@ public class ApplicationDBContext : IdentityDbContext<User>
                     NormalizedName = "USER"
                 },
             };
+        
         builder.Entity<IdentityRole>().HasData(roles);
     }
+
 
 
 }
