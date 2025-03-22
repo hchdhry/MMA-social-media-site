@@ -1,5 +1,7 @@
 using API.Interfaces;
 using API.Models;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
@@ -14,6 +16,7 @@ public class FighterController:ControllerBase
         
     }
     [HttpPost]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
     public async Task<IActionResult> CreateFighter([FromBody] UpdateFighterDTO fighterDto)
     {
         var fighter = await _fighterRepository.CreateFighter(fighterDto);
