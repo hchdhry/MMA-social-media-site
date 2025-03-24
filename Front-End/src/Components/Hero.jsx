@@ -36,11 +36,7 @@ const Hero = () => {
                             <div className="relative">
                                 <div className="w-full h-64 sm:h-80 bg-gray-800 rounded-lg overflow-hidden">
                                     <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-50"></div>
-                                    <img
-                                        src="/api/placeholder/800/500"
-                                        alt="MMA Fighter"
-                                        className="w-full h-full object-cover"
-                                    />
+                                
                                 </div>
                                 <div className="absolute bottom-4 left-4">
                                     <p className="text-sm text-gray-300">UPCOMING FIGHT</p>
