@@ -9,6 +9,7 @@ import GymService from './pages/GymService';
 import CommentsPage from './pages/CommentsPage';
 import ChatRoom from './pages/ChatRoom';
 import EventsPage from './pages/EventsPage';
+import About from './pages/About';
 
 function App() {
   const router = createBrowserRouter([
@@ -19,7 +20,8 @@ function App() {
     {path:"/Gym",element:<GymService/>},
     { path:"/Comments/:fighterId",element:<CommentsPage/>},
     {path:"/events",element:<EventsPage/>},
-    {path:"/chat/:eventId",element:<ChatRoom/>}
+    {path:"/chat/:eventId",element:<ChatRoom/>},
+    {path:"/About",element:<About/>}
 
     
   
