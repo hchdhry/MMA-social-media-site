@@ -8,7 +8,7 @@ const FighterCard = ({ fighterData }) => {
     const handleClick = async () => {
         try {
 
-            const response = await fetch(`http://localhost:5211/api/Fighters/create?fighterId=${fighterId}`, {
+            const response = await fetch(`http://localhost:5211/api/Gym/create?fighterId=${fighterId}`, {
                 method: "POST",
                 headers: {
                     'Accept': '*/*',

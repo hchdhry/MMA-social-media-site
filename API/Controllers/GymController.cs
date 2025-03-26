@@ -21,7 +21,7 @@ namespace API.Controllers
             _gymRepository = gymRepository;
             _fighterRepository = fighterRepository;
         }
-        [Authorize]
+        
         [HttpPost("create")]
         
         public async Task<IActionResult> CreateGym(int fighterId)
