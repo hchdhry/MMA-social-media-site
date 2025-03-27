@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 const Header = () => {
     const [userDetails, setUserDetails] = useState({ username: null, role: null });
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const [isAdminDropdownVisible, setIsAdminDropdownVisible] = useState(false);
     let dropdownTimeout;
+    let adminDropdownTimeout;
 
     useEffect(() => {
         const handleStorageChange = async () => {
@@ -61,7 +63,7 @@ const Header = () => {
                                 setIsDropdownVisible(true);
                             }}
                             onMouseLeave={() => {
-                                dropdownTimeout = setTimeout(() => setIsDropdownVisible(false), 500); // Delay hiding by 500ms
+                                dropdownTimeout = setTimeout(() => setIsDropdownVisible(false), 500);
                             }}
                         >
                             <button className="hover:text-red-500 transition duration-300 flex items-center">
@@ -80,6 +82,36 @@ const Header = () => {
                                 </Link>
                             </div>
                         </li>
+
+                        {/* Admin Dropdown */}
+                        {userDetails.role === 'Admin' && (
+                            <li
+                                className="relative group"
+                                onMouseEnter={() => {
+                                    clearTimeout(adminDropdownTimeout);
+                                    setIsAdminDropdownVisible(true);
+                                }}
+                                onMouseLeave={() => {
+                                    adminDropdownTimeout = setTimeout(() => setIsAdminDropdownVisible(false), 500);
+                                }}
+                            >
+                                <button className="hover:text-red-500 transition duration-300 flex items-center">
+                                    Admin Tools
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                                <div className={`absolute left-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg transition-opacity duration-500 z-10 
+                                    ${isAdminDropdownVisible ? "opacity-100 visible" : "opacity-0 invisible"}`}>
+                                    <Link to="/create-fighter" className="block px-4 py-2 text-sm hover:bg-gray-700">
+                                        Create Fighter
+                                    </Link>
+                                    <Link to="/AdminEvents" className="block px-4 py-2 text-sm hover:bg-gray-700">
+                                        Create Event
+                                    </Link>
+                                </div>
+                            </li>
+                        )}
 
                         {userDetails.username !== null ? (
                             <>
