@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { jwtDecode } from "jwt-decode";
 import ChatRoomComment from "../Components/ChatRoomComment";
-
+import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 const useChatConnection = (eventName, userName) => {
     const [connection, setConnection] = useState(null);
     const [error, setError] = useState('');
@@ -114,6 +115,8 @@ const ChatRoom = () => {
     };
 
     return (
+        <>
+        <Header/>
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">MMA Event Chat: {eventName}</h1>
 
@@ -137,6 +140,8 @@ const ChatRoom = () => {
                 <button onClick={sendMessage} className="p-2 bg-green-500 text-white rounded">Send</button>
             </div>
         </div>
+        <Footer/>
+       </>
     );
 };
 
