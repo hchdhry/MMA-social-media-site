@@ -68,6 +68,14 @@ public class FighterRepository : IFighterRepository
         {
             fighters = fighters.Where(f=>f.Name.ToLower().StartsWith(query.NameQuery.ToLower()));
         }
+        if(query.OrderByWins == true)
+        {
+            fighters = fighters.OrderByDescending(f=>f.Wins);
+        }
+        if(query.OrderAlphabatically == true)
+        {
+            fighters = fighters.OrderBy(f=>f.Name);
+        }
         int skipnumber = (query.PageNumber-1) * query.PageSize;
         fighters = fighters.Skip(skipnumber).Take(query.PageSize);
         return fighters.Include(f => f.Comments).Select(f=>f.MapFighterToDTO()).ToListAsync();

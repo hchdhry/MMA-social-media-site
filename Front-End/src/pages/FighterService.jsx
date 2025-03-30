@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../Components/Header';
 import FighterCard from '../Components/FighterCard';
 
 const FighterService = () => {
     const [queryObject, setQueryObject] = useState({
         NameQuery: '',
-        SortBy: '',
+        OrderAlphabatically: false,
         PageSize: 20,
-        PageNumber: 1
+        PageNumber: 1,
+        OrderByWins: false,
     });
     const [data, setData] = useState([]);
     const jwtToken = localStorage.getItem("token");
@@ -17,19 +18,23 @@ const FighterService = () => {
     };
 
     const handleSortChange = (event) => {
+        const newValue = event.target.value;
         setQueryObject(prev => ({
             ...prev,
-            SortBy: event.target.value
+            OrderByWins: newValue === "wins",
+            OrderAlphabatically: newValue === "name"
         }));
     };
 
+    useEffect(() => {
+        if (queryObject.OrderByWins || queryObject.OrderAlphabatically) {
+            fetchData();
+        }
+    }, [queryObject.OrderByWins, queryObject.OrderAlphabatically]);
+
     const fetchData = async () => {
         try {
-            let url = `http://localhost:5211/api/Fighter?NameQuery=${queryObject.NameQuery}&PageSize=${queryObject.PageSize}&PageNumber=${queryObject.PageNumber}`;
-
-            if (queryObject.SortBy) {
-                url += `&SortBy=${queryObject.SortBy}`;
-            }
+            let url = `http://localhost:5211/api/Fighter?NameQuery=${queryObject.NameQuery}&PageSize=${queryObject.PageSize}&PageNumber=${queryObject.PageNumber}&OrderByWins=${queryObject.OrderByWins}&OrderAlphabatically=${queryObject.OrderAlphabatically}`;
 
             let response = await fetch(url);
 
@@ -69,8 +74,9 @@ const FighterService = () => {
         setQueryObject(prev => ({
             ...prev,
             PageNumber: prev.PageNumber + 1
-        }));
-        fetchData();
+        }), () => {
+            fetchData();
+        });
     };
 
     return (
@@ -83,10 +89,8 @@ const FighterService = () => {
                         className="bg-gray-800 text-white px-4 py-2 rounded-md"
                     >
                         <option value="">Sort by</option>
-                        <option value="wins_desc">Most Wins</option>
-                        <option value="wins_asc">Least Wins</option>
-                        <option value="name_asc">Name (A-Z)</option>
-                        <option value="name_desc">Name (Z-A)</option>
+                        <option value="wins">Most Wins</option>
+                        <option value="name">Name (A-Z)</option>
                     </select>
                 </div>
                 <form onSubmit={handleSubmit} className="flex justify-center mb-8">
