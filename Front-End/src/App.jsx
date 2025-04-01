@@ -13,6 +13,7 @@ import EventsPage from './pages/EventsPage';
 import About from './pages/About';
 import CreateFighterForm from './pages/CreateFighter';
 import AdminEvents from './AdminEvents';
+import NotFound from './pages/404';
 
 function App() {
   const router = createBrowserRouter([
@@ -26,8 +27,8 @@ function App() {
     {path:"/chat/:eventId",element:<ChatRoom/>},
     {path:"/About",element:<About/>},
     { path: "/create-fighter" , element: <CreateFighterForm/>},
-    {path:"/AdminEvents",element:<AdminEvents/>}
-
+    {path:"/AdminEvents",element:<AdminEvents/>},
+    {path:"*",element:<NotFound/>}
     
   
   ])
