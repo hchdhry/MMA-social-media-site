@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'sonner';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 const EventCard = ({ event }) => {
     const navigate = useNavigate();
@@ -8,9 +10,9 @@ const EventCard = ({ event }) => {
     const handleJoinChat = () => {
         const token = localStorage.getItem("token");
         if (!token) {
-            navigate("/login"); // Redirect if not authenticated
+            navigate("/login"); 
         } else {
-            navigate(`/chat/${event.id}`); // Proceed to chat if authenticated
+            navigate(`/chat/${event.id}`); 
         }
     };
 
@@ -68,6 +70,8 @@ const EventsPage = () => {
     }
 
     return (
+        <>
+        <Header/>
         <div className="p-6 min-h-screen bg-gray-900">
             <h1 className="text-3xl font-bold text-white mb-6">Upcoming UFC Events</h1>
             {events.length === 0 ? (
@@ -82,6 +86,8 @@ const EventsPage = () => {
                 </div>
             )}
         </div>
+        <Footer/>
+        </>
     );
 };
 
