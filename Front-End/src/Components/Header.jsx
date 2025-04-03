@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png"; // Update the path if needed
 
 const Header = () => {
+    const navigate = useNavigate();
     const [userDetails, setUserDetails] = useState({ username: null, role: null });
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [isAdminDropdownVisible, setIsAdminDropdownVisible] = useState(false);
@@ -36,6 +37,7 @@ const Header = () => {
     const handleLogOut = () => {
         localStorage.removeItem("token");
         setUserDetails({ username: null, role: null });
+        navigate("/");
     };
 
     return (
