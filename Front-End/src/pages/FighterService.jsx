@@ -26,11 +26,12 @@ const FighterService = () => {
         }));
     };
 
+  
     useEffect(() => {
-        if (queryObject.OrderByWins || queryObject.OrderAlphabatically) {
+        if (queryObject.OrderByWins || queryObject.OrderAlphabatically || queryObject.PageNumber > 1) {
             fetchData();
         }
-    }, [queryObject.OrderByWins, queryObject.OrderAlphabatically]);
+    }, [queryObject.OrderByWins, queryObject.OrderAlphabatically, queryObject.PageNumber]);
 
     const fetchData = async () => {
         try {
@@ -57,7 +58,12 @@ const FighterService = () => {
                 }
             } else {
                 const fetchedData = await response.json();
-                setData(fetchedData);
+                // Append new fighters instead of replacing when loading more
+                if (queryObject.PageNumber > 1) {
+                    setData(prevData => [...prevData, ...fetchedData]);
+                } else {
+                    setData(fetchedData);
+                }
             }
         } catch (e) {
             console.log(e);
@@ -67,16 +73,21 @@ const FighterService = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Reset page number when performing a new search
+        setQueryObject(prev => ({
+            ...prev,
+            PageNumber: 1
+        }));
         fetchData();
     };
 
-    const loadMore = () => {
+    const loadMore = (e) => {
+        e.preventDefault();
         setQueryObject(prev => ({
             ...prev,
             PageNumber: prev.PageNumber + 1
-        }), () => {
-            fetchData();
-        });
+        }));
+        // The useEffect will trigger fetchData when PageNumber changes
     };
 
     return (
