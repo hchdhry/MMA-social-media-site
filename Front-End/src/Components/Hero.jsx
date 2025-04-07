@@ -21,9 +21,9 @@ const Hero = () => {
                             <h2 className="text-4xl font-bold mb-4">Join The <span className="text-red-500">Ultimate</span> Fighting Community</h2>
                             <p className="text-gray-400 mb-6">Connect with MMA fans worldwide, discuss fights, share predictions, and stay updated with the latest news from the octagon.</p>
                             <div className="flex flex-wrap gap-4">
-                                <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
+                                <Link to ="/Register"className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
                                     Join Now
-                                </button>
+                                </Link>
                                 <Link
                                     to="/events"
                                     className="border border-white hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-lg transition duration-300"
