@@ -58,7 +58,7 @@ const FighterService = () => {
                 }
             } else {
                 const fetchedData = await response.json();
-                // Append new fighters instead of replacing when loading more
+               
                 if (queryObject.PageNumber > 1) {
                     setData(prevData => [...prevData, ...fetchedData]);
                 } else {
@@ -73,7 +73,7 @@ const FighterService = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Reset page number when performing a new search
+       
         setQueryObject(prev => ({
             ...prev,
             PageNumber: 1
@@ -87,7 +87,7 @@ const FighterService = () => {
             ...prev,
             PageNumber: prev.PageNumber + 1
         }));
-        // The useEffect will trigger fetchData when PageNumber changes
+   
     };
 
     return (

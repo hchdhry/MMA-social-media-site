@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import octogonImg from "../assets/Octagon.png";
+
 const EventCard = ({ event }) => {
     const navigate = useNavigate();
 
@@ -11,11 +13,15 @@ const EventCard = ({ event }) => {
         }
     };
 
-    // Create Google search URL for tickets
     const ticketSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(event.name + " tickets")}`;
 
     return (
         <div className="bg-gray-800 p-6 rounded-lg shadow-md text-white mb-4">
+            <img
+                src={octogonImg}
+                alt="Event"
+                className="w-full h-48 object-cover rounded-md mb-4"
+            />
             <h2 className="text-xl font-bold">{event.name}</h2>
             <p className="text-gray-400">Date: {new Date(event.date).toLocaleDateString()}</p>
             <div className="mt-4 flex gap-3">
