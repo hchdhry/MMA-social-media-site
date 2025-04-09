@@ -14,6 +14,7 @@ import About from './pages/About';
 import CreateFighterForm from './pages/CreateFighter';
 import AdminEvents from './AdminEvents';
 import NotFound from './pages/404';
+import FighterDelete from './pages/FighterDelete';
 
 function App() {
   const router = createBrowserRouter([
@@ -28,6 +29,7 @@ function App() {
     {path:"/About",element:<About/>},
     { path: "/create-fighter" , element: <CreateFighterForm/>},
     {path:"/AdminEvents",element:<AdminEvents/>},
+    {path:"/FighterDelete",element:<FighterDelete/>},
     {path:"*",element:<NotFound/>}
     
   

@@ -115,6 +115,9 @@ const Header = () => {
                                 <Link to="/AdminEvents" className="block px-4 py-2 text-sm hover:bg-gray-700">
                                     Create Event
                                 </Link>
+                                <Link to="/FighterDelete" className="block px-4 py-2 text-sm hover:bg-gray-700">
+                                    Delete Fighter
+                                </Link>
                             </div>
                         </li>
                     )}

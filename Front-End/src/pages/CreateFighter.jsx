@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
+import { toast } from 'sonner';
 
 const CreateFighterForm = () => {
     const navigate = useNavigate();
