@@ -15,6 +15,7 @@ import CreateFighterForm from './pages/CreateFighter';
 import AdminEvents from './AdminEvents';
 import NotFound from './pages/404';
 import FighterDelete from './pages/FighterDelete';
+import FighterCompanion from './pages/FightCompanion';
 
 function App() {
   const router = createBrowserRouter([
@@ -30,6 +31,7 @@ function App() {
     { path: "/create-fighter" , element: <CreateFighterForm/>},
     {path:"/AdminEvents",element:<AdminEvents/>},
     {path:"/FighterDelete",element:<FighterDelete/>},
+    {path:"/FightCompanion",element:<FighterCompanion/>},
     {path:"*",element:<NotFound/>}
     
   
@@ -37,10 +39,9 @@ function App() {
 
   return ((
     <div>
-      {/* Add Toaster component here */}
-      <Toaster position="top-right" theme="dark" />  {/* Toast container */}
+   
+      <Toaster position="top-right" theme="dark" /> 
 
-      {/* Render the Router */}
       <RouterProvider router={router} />
     </div>
   ))
