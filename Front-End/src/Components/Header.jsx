@@ -59,10 +59,13 @@ const Header = () => {
                         <Link to="/about" className="hover:text-red-500 transition duration-300">
                             About
                         </Link>
+                       
+                    </li>
+                    <li>
                         <Link to="/FightCompanion" className="hover:text-red-500 transition duration-300">
                             Fight Companion
                         </Link>
-                    </li>
+                        </li>
 
                     {/* Fighters Dropdown */}
                     <li
