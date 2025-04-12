@@ -16,6 +16,7 @@ import AdminEvents from './AdminEvents';
 import NotFound from './pages/404';
 import FighterDelete from './pages/FighterDelete';
 import FighterCompanion from './pages/FightCompanion';
+import Contact from './pages/Contact';
 
 function App() {
   const router = createBrowserRouter([
@@ -32,7 +33,8 @@ function App() {
     {path:"/AdminEvents",element:<AdminEvents/>},
     {path:"/FighterDelete",element:<FighterDelete/>},
     {path:"/FightCompanion",element:<FighterCompanion/>},
-    {path:"*",element:<NotFound/>}
+    {path:"*",element:<NotFound/>},
+    {path:"/Contact",element:<Contact/>}
     
   
   ])

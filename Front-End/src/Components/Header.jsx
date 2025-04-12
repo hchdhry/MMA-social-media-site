@@ -66,6 +66,11 @@ const Header = () => {
                             Fight Companion
                         </Link>
                         </li>
+                    <li>
+                        <Link to="/Contact" className="hover:text-red-500 transition duration-300">
+                            Contact Us
+                        </Link>
+                    </li>
 
                     {/* Fighters Dropdown */}
                     <li
