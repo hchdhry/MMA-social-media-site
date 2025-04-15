@@ -1,5 +1,6 @@
 using API.Data;
 using Microsoft.EntityFrameworkCore;
+using API.Interfaces;
 
 namespace API.Repository;
 public class ArticleRepository : IArticleInterface
@@ -10,7 +11,7 @@ public class ArticleRepository : IArticleInterface
         _dbContext = context;
     }
 
-    public async Task<Article> CreateArticle(Article article, int user)
+    public async Task<Article> CreateArticle(UpdateArticleDTO article, string user)
     {
        Article newArticle = new Article
         {
@@ -42,15 +43,15 @@ public class ArticleRepository : IArticleInterface
         return articles;
     }
 
-    public async Task<List<Article>> GetArticleByUserId(int id)
+    public async Task<List<Article>> GetArticleByUserId(string userId)
     {
-        var articles =  await _dbContext.Articles.Where(a => a.UserId == id).ToListAsync();
+        var articles =  await _dbContext.Articles.Where(a => a.UserId == userId).ToListAsync();
         return articles;
     }
 
-    public async Task<Article> UpdateArticle(UpdateArticleDTO article)
+    public async Task<Article> UpdateArticle(UpdateArticleDTO article, int id)
     {
-        var exisitingArticle = await _dbContext.Articles.FirstOrDefaultAsync(a => a.Id == article.Id);
+        var exisitingArticle = await _dbContext.Articles.FirstOrDefaultAsync(a => a.Id == id);
         if (exisitingArticle == null)
         {
             throw new Exception("Article not found");

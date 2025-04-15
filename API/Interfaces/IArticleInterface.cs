@@ -1,8 +1,9 @@
+namespace API.Interfaces;
 public interface IArticleInterface
 {
     Task<List<Article>> GetAllArticles();
-    Task<List<Article>> GetArticleByUserId(int id);
-    Task<Article> CreateArticle(Article article, int userId);
-    Task<Article> UpdateArticle(UpdateArticleDTO article);
+    Task<List<Article>> GetArticleByUserId(string userId);
+    Task<Article> CreateArticle(UpdateArticleDTO article, string userId);
+    Task<Article> UpdateArticle(UpdateArticleDTO article,int id);
     Task<Article> DeleteArticle(int id);
 }

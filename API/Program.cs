@@ -23,6 +23,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IGymRepository, GymRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();    
 builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IArticleInterface, ArticleRepository>();
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
