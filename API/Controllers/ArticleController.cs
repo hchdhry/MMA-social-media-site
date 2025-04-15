@@ -34,6 +34,42 @@ namespace API.Controllers
             await _articleRepository.CreateArticle(article, user.Id);
             return Ok(article);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllArticles()
+        {
+            var articles = await _articleRepository.GetAllArticles();
+            return Ok(articles);
+        }
+        [HttpGet("getbyuser")]
+        public async Task<IActionResult> GetArticleByUserId()
+        {
+            var userName = HttpContext.User.getUserName();
+            var user = await _userManager.FindByNameAsync(userName);
+
+            var articles = await _articleRepository.GetArticleByUserId(user.Id);
+            return Ok(articles);
+        }
+        [HttpPut]
+        [Authorize]
+        [Route("update/{id}")]
+        public async Task<IActionResult> UpdateArticle([FromBody] UpdateArticleDTO article, int id)
+        {
+            var userName = HttpContext.User.getUserName();
+            var user = await _userManager.FindByNameAsync(userName);
+            await _articleRepository.UpdateArticle(article, id,user.Id);
+            return Ok(article);
+        }
+        [HttpDelete]
+        [Authorize]
+        [Route("delete/{id}")]
+        public async Task<IActionResult> DeleteArticle(int id)
+        {
+            var userName = HttpContext.User.getUserName();
+            var user = await _userManager.FindByNameAsync(userName);
+            await _articleRepository.DeleteArticle(id, user.Id);
+            return Ok("Article deleted successfully");
+        }
         
+
     }
 }

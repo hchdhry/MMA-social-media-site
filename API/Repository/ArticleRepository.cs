@@ -25,12 +25,16 @@ public class ArticleRepository : IArticleInterface
         return newArticle;
     }
 
-    public async Task<Article> DeleteArticle(int id)
+    public async Task<Article> DeleteArticle(int id, string userId)
     {
         var article = await _dbContext.Articles.FirstOrDefaultAsync(a => a.Id == id);
         if (article == null)
         {
             throw new Exception("Article not found");
+        }
+        if (article.UserId != userId)
+        {
+            throw new Exception("You are not authorized to delete this article");
         }
         _dbContext.Articles.Remove(article);
         _dbContext.SaveChangesAsync();
@@ -49,15 +53,21 @@ public class ArticleRepository : IArticleInterface
         return articles;
     }
 
-    public async Task<Article> UpdateArticle(UpdateArticleDTO article, int id)
+    public async Task<Article> UpdateArticle(UpdateArticleDTO article, int id, string userId)
     {
         var exisitingArticle = await _dbContext.Articles.FirstOrDefaultAsync(a => a.Id == id);
         if (exisitingArticle == null)
         {
             throw new Exception("Article not found");
         }
+        if (exisitingArticle.UserId != userId)
+        {
+            throw new Exception("You are not authorized to update this article");
+        }
         exisitingArticle.Title = article.Title; 
         exisitingArticle.Content = article.Content;
+        _dbContext.Articles.Update(exisitingArticle);
+        await _dbContext.SaveChangesAsync();
         return exisitingArticle;
     }
 }
