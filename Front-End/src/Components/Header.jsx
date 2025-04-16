@@ -84,7 +84,7 @@ const Header = () => {
                         }}
                     >
                         <button className="hover:text-red-500 transition duration-300 flex items-center">
-                            Fighters
+                            Services
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
@@ -96,6 +96,9 @@ const Header = () => {
                             </Link>
                             <Link to="/Gym" className="block px-4 py-2 text-sm hover:bg-gray-700">
                                 Your Gym
+                            </Link>
+                            <Link to="/ManageArticles" className="block px-4 py-2 text-sm hover:bg-gray-700">
+                                Your Articles
                             </Link>
                         </div>
                     </li>
