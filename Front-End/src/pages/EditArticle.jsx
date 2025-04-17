@@ -14,6 +14,8 @@ const EditArticle = () => {
         content: ''
     });
 
+    const [errors, setErrors] = useState({});
+
     useEffect(() => {
         if (state?.article) {
             setArticle(state.article);
@@ -22,10 +24,28 @@ const EditArticle = () => {
 
     const handleChange = (e) => {
         setArticle({ ...article, [e.target.name]: e.target.value });
+        setErrors({ ...errors, [e.target.name]: '' });
+    };
+
+    const validate = () => {
+        const newErrors = {};
+
+        if (article.title.trim().length < 5) {
+            newErrors.title = 'Title must be at least 5 characters.';
+        }
+
+        if (article.content.trim().length < 20) {
+            newErrors.content = 'Content must be at least 20 characters.';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validate()) return;
+
         try {
             const res = await fetch(`http://localhost:5211/api/Article/update/${id}`, {
                 method: 'PUT',
@@ -60,9 +80,13 @@ const EditArticle = () => {
                                 name="title"
                                 value={article.title}
                                 onChange={handleChange}
-                                className="w-full bg-gray-900 border border-gray-600 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                                className={`w-full bg-gray-900 border ${errors.title ? 'border-red-500' : 'border-gray-600'
+                                    } text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500`}
                                 required
                             />
+                            {errors.title && (
+                                <p className="text-red-500 text-sm mt-1">{errors.title}</p>
+                            )}
                         </div>
                         <div>
                             <label className="block text-gray-300 font-semibold mb-1">Content</label>
@@ -71,9 +95,13 @@ const EditArticle = () => {
                                 rows="8"
                                 value={article.content}
                                 onChange={handleChange}
-                                className="w-full bg-gray-900 border border-gray-600 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                                className={`w-full bg-gray-900 border ${errors.content ? 'border-red-500' : 'border-gray-600'
+                                    } text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500`}
                                 required
                             />
+                            {errors.content && (
+                                <p className="text-red-500 text-sm mt-1">{errors.content}</p>
+                            )}
                         </div>
                         <div className="text-center">
                             <button
