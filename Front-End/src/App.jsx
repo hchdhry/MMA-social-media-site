@@ -19,6 +19,7 @@ import FighterCompanion from './pages/FightCompanion';
 import Contact from './pages/Contact';
 import ManageArticles from './pages/ManageArticles';
 import EditArticle from './pages/EditArticle';
+import CreateArticle from './pages/CreateArticle';
 
 function App() {
   const router = createBrowserRouter([
@@ -39,6 +40,8 @@ function App() {
     {path:"/Contact",element:<Contact/>},
     {path:"/ManageArticles",element:<ManageArticles/>},
     {path:"/EditArticle/:id",element:<EditArticle/>},
+    {path:"/CreateArticle",element:<CreateArticle/>}
+
     
   
   ])

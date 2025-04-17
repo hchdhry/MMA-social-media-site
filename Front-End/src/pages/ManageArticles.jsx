@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import ArticleCard from '../Components/ArticleCard';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
+import { useNavigate } from 'react-router-dom';
 
 const ManageArticles = () => {
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -40,7 +42,14 @@ const ManageArticles = () => {
             <main className="bg-gray-900 text-white min-h-screen py-12 px-4">
                 <div className="max-w-4xl mx-auto">
                     <h1 className="text-4xl font-bold text-red-500 mb-8 text-center">Manage Your Articles</h1>
-
+                    <div className="flex justify-end mb-6">
+                        <button
+                            onClick={() => navigate('/CreateArticle')}
+                            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition"
+                        >
+                            Create New Article
+                        </button>
+                    </div>
                     {loading ? (
                         <p className="text-center text-gray-400">Loading...</p>
                     ) : articles.length === 0 ? (
