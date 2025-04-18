@@ -31,12 +31,20 @@ const ArticleCard = ({ article, token, onDeleted }) => {
         navigate(`/EditArticle/${article.id}`, { state: { article } });
     };
 
+    const handleReadMore = () => {
+        navigate(`/ReadArticle/${article.id}`, { state: { article } });
+    };
+
     return (
         <div className="bg-gray-800 rounded-lg p-6 shadow-md border border-gray-700">
             <h2 className="text-2xl font-bold text-red-400 mb-2">{article.title}</h2>
-            <p className="text-gray-300 mb-4">{article.content}</p>
+            <p className="text-gray-300 mb-4">
+                {article.content.length > 30
+                    ? `${article.content.slice(0, 30)}...`
+                    : article.content}
+            </p>
 
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-4">
                 <button
                     onClick={handleEdit}
                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
@@ -49,6 +57,14 @@ const ArticleCard = ({ article, token, onDeleted }) => {
                 >
                     Delete
                 </button>
+                 
+                    <button
+                        onClick={handleReadMore}
+                        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+                    >
+                        Read More
+                    </button>
+                
             </div>
         </div>
     );

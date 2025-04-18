@@ -20,6 +20,7 @@ import Contact from './pages/Contact';
 import ManageArticles from './pages/ManageArticles';
 import EditArticle from './pages/EditArticle';
 import CreateArticle from './pages/CreateArticle';
+import ReadArticle from './pages/ReadArticle';
 
 function App() {
   const router = createBrowserRouter([
@@ -40,7 +41,9 @@ function App() {
     {path:"/Contact",element:<Contact/>},
     {path:"/ManageArticles",element:<ManageArticles/>},
     {path:"/EditArticle/:id",element:<EditArticle/>},
-    {path:"/CreateArticle",element:<CreateArticle/>}
+    {path:"/CreateArticle",element:<CreateArticle/>},
+    {path:"/ReadArticle/:id",element:<ReadArticle />}
+
 
     
   
