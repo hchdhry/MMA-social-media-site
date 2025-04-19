@@ -1,76 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import ArticleCard from '../Components/ArticleCard';
-import Header from '../Components/Header';
-import Footer from '../Components/Footer';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ManageArticles = () => {
-    const [articles, setArticles] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const token = localStorage.getItem('token');
+const ArticleCard = ({ article, token, onDeleted, hideActions = false }) => {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchArticles = async () => {
-            try {
-                const res = await fetch('http://localhost:5211/api/Article/getbyuser', {
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                        'Accept': '*/*',
-                        'Content-Type': 'application/json'
-                    },
-                });
-                const data = await res.json();
-                setArticles(data);
-            } catch (err) {
-                console.error('Error:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this article?");
+        if (!confirmDelete) return;
 
-        fetchArticles();
-    }, [token]);
+        try {
+            const res = await fetch(`http://localhost:5211/api/Article/delete/${article.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': '*/*',
+                    'Content-Type': 'application/json',
+                },
+            });
 
-    const handleDeleted = (id) => {
-        setArticles(prev => prev.filter(article => article.id !== id));
+            if (!res.ok) throw new Error('Failed to delete');
+            onDeleted?.(article.id);
+        } catch (err) {
+            console.error('Delete failed:', err);
+            alert('Failed to delete the article.');
+        }
+    };
+
+    const handleEdit = () => {
+        navigate(`/EditArticle/${article.id}`, { state: { article } });
+    };
+
+    const handleReadMore = () => {
+        navigate(`/ReadArticle/${article.id}`, { state: { article } });
     };
 
     return (
-        <>
-            <Header />
-            <main className="bg-gray-900 text-white min-h-screen py-12 px-4">
-                <div className="max-w-4xl mx-auto">
-                    <h1 className="text-4xl font-bold text-red-500 mb-8 text-center">Manage Your Articles</h1>
-                    <div className="flex justify-end mb-6">
+        <div className="bg-gray-800 rounded-lg p-6 shadow-md border border-gray-700">
+            <h2 className="text-2xl font-bold text-red-400 mb-2">{article.title}</h2>
+            <p className="text-gray-300 mb-4 break-words whitespace-pre-wrap">
+                {article.content.length > 300
+                    ? article.content.slice(0, 300) + '...'
+                    : article.content}
+            </p>
+
+            <div className="flex gap-4">
+                {hideActions ? (
+                    <button
+                        onClick={handleReadMore}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+                    >
+                        Read More
+                    </button>
+                ) : (
+                    <>
                         <button
-                            onClick={() => navigate('/CreateArticle')}
-                            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition"
+                            onClick={handleEdit}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
                         >
-                            Create New Article
+                            Edit
                         </button>
-                    </div>
-                    {loading ? (
-                        <p className="text-center text-gray-400">Loading...</p>
-                    ) : articles.length === 0 ? (
-                        <p className="text-center text-gray-400">No articles found.</p>
-                    ) : (
-                        <div className="space-y-6">
-                            {articles.map((article) => (
-                                <ArticleCard
-                                    key={article.id}
-                                    article={article}
-                                    token={token}
-                                    onDeleted={handleDeleted}
-                                />
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </main>
-            <Footer />
-        </>
+                        <button
+                            onClick={handleDelete}
+                            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+                        >
+                            Delete
+                        </button>
+                    </>
+                )}
+            </div>
+        </div>
     );
 };
 
-export default ManageArticles;
+export default ArticleCard;

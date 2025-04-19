@@ -21,6 +21,7 @@ import ManageArticles from './pages/ManageArticles';
 import EditArticle from './pages/EditArticle';
 import CreateArticle from './pages/CreateArticle';
 import ReadArticle from './pages/ReadArticle';
+import BrowseArticles from './pages/BrowseArticles';
 
 function App() {
   const router = createBrowserRouter([
@@ -42,7 +43,8 @@ function App() {
     {path:"/ManageArticles",element:<ManageArticles/>},
     {path:"/EditArticle/:id",element:<EditArticle/>},
     {path:"/CreateArticle",element:<CreateArticle/>},
-    {path:"/ReadArticle/:id",element:<ReadArticle />}
+    {path:"/ReadArticle/:id",element:<ReadArticle />},
+    {path:"/BrowseArticles",element:<BrowseArticles />},
 
 
     
