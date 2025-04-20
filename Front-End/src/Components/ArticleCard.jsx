@@ -35,38 +35,40 @@ const ArticleCard = ({ article, token, onDeleted, hideActions = false }) => {
     };
 
     return (
-        <div className="bg-gray-800 rounded-lg p-6 shadow-md border border-gray-700">
-            <h2 className="text-2xl font-bold text-red-400 mb-2">{article.title}</h2>
-            <p className="text-gray-300 mb-4 break-words whitespace-pre-wrap">
-                {article.content.length > 300
-                    ? article.content.slice(0, 300) + '...'
-                    : article.content}
-            </p>
+        <div className="bg-gray-800 rounded-lg overflow-hidden shadow-md border border-gray-700 hover:shadow-lg transition-shadow duration-300">
+            <div className="p-4">
+                <h3 className="font-bold text-white mb-2">{article.title}</h3>
+                <p className="text-gray-400 text-sm break-words whitespace-pre-wrap mb-4">
+                    {article.content.length > 300
+                        ? article.content.slice(0, 300) + '...'
+                        : article.content}
+                </p>
 
-            <div className="flex gap-4">
-                {hideActions ? (
-                    <button
-                        onClick={handleReadMore}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-                    >
-                        Read More
-                    </button>
-                ) : (
-                    <>
+                <div className="flex gap-4">
+                    {hideActions ? (
                         <button
-                            onClick={handleEdit}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+                            onClick={handleReadMore}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
                         >
-                            Edit
+                            Read More
                         </button>
-                        <button
-                            onClick={handleDelete}
-                            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
-                        >
-                            Delete
-                        </button>
-                    </>
-                )}
+                    ) : (
+                        <>
+                            <button
+                                onClick={handleEdit}
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm"
+                            >
+                                Delete
+                            </button>
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );
