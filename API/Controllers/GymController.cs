@@ -74,7 +74,14 @@ namespace API.Controllers
         [Authorize]
         public async Task<IActionResult> GetAllGymsByUserId()
         {
-            var gyms = await _gymRepository.GetAllGymsByUserId();
+            var userName = HttpContext.User.getUserName();
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            var UserId = user.Id;
+            var gyms = await _gymRepository.GetAllGymsByUserId(UserId);
             return Ok(gyms);
         }
     }

@@ -27,9 +27,9 @@ public class GymRepository : IGymRepository
         return gym;
     }
 
-    public async Task<List<Gym>> GetAllGymsByUserId()
+    public async Task<List<Gym>> GetAllGymsByUserId(string UserId)
     {
-        var gyms = await  _dbContext.Gyms.Where(g=>g.UserId == g.UserId).Include(g=>g.Fighter).ToListAsync();
+        var gyms = await  _dbContext.Gyms.Where(g=>g.UserId == UserId).Include(g=>g.Fighter).ToListAsync();
         return gyms;
     }
     public async Task<Gym> GetGymByFighterId(Gym gym)
