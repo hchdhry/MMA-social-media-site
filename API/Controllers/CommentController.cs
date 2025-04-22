@@ -3,7 +3,9 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using API.Extensions;
 using Sprache;
+using Microsoft.AspNetCore.Identity;
 
 [ApiController]
 [Microsoft.AspNetCore.Authorization.Authorize]
@@ -11,11 +13,13 @@ using Sprache;
 public class CommentController:ControllerBase
 {
     private readonly ICommentRepository _commentRepository;
+    private readonly UserManager<User> _userManager;
     private readonly IFighterRepository _fighterRepository;
-    public CommentController(ICommentRepository commentRepository,IFighterRepository fighterRepository)
+    public CommentController(ICommentRepository commentRepository,IFighterRepository fighterRepository, UserManager<User> userManager)
     {
         _commentRepository = commentRepository;
         _fighterRepository = fighterRepository;
+        _userManager = userManager;
     }
     [HttpGet]
     [Route("{fighterId}")]
@@ -33,11 +37,13 @@ public class CommentController:ControllerBase
     [Route("{fighterId}")]
     public async Task<IActionResult> Create ([FromBody] CreateCommentDTO comment,[FromRoute]int fighterId)
     {
-        if(!await _fighterRepository.FighterExists(fighterId))
+        var userName = HttpContext.User.getUserName();
+        
+        if (!await _fighterRepository.FighterExists(fighterId))
         {
             return BadRequest("fighter does not exist");
         }
-        var newComment = await _commentRepository.CreateComment(comment,fighterId);
+        var newComment = await _commentRepository.CreateComment(comment,fighterId,userName);
         if (newComment == null)
         {
             return BadRequest("could not create comment");

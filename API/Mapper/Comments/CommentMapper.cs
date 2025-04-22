@@ -11,7 +11,8 @@ public static class CommentMapper
             Title = comment.Title,
             Text = comment.Text,
             FighterId = comment.FighterId,
-            CreatedAt = comment.CreatedAt
+            CreatedAt = comment.CreatedAt,
+            UserName = comment.UserName
         };
     }
     public static CreateCommentDTO ToCreateCommentDTO(this Comment comment)

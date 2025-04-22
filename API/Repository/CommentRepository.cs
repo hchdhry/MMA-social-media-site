@@ -1,24 +1,31 @@
 using API.Data;
 using API.DTO.Comments;
 using API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using API.Extensions;
 
 namespace API.Repository;
+
 public class CommentRepository : ICommentRepository
 {
     private readonly ApplicationDBContext _DBcontext;
+
     public CommentRepository(ApplicationDBContext context)
     {
         _DBcontext = context;
-        
+       
+
     }
-    public async Task<Comment> CreateComment(CreateCommentDTO comment, int fighterId)
+    public async Task<Comment> CreateComment(CreateCommentDTO comment, int fighterId,string userName)
     {
+     
         var newComment = new Comment
         {
             FighterId = fighterId,
             Text = comment.Text,
             CreatedAt = DateTime.UtcNow,
+            UserName = userName,
             Title = comment.Title
 
         };
