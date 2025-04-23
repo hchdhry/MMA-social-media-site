@@ -9,6 +9,9 @@ const CommentItem = ({ comment }) => {
                 </p>
                 <p className="font-semibold">{comment.title}</p>
                 <p>{comment.text}</p>
+                <p className="text-sm text-gray-400">
+                    {new Date(comment.createdAt).toLocaleString()}
+                </p>
             </div>
         </li>
     );
