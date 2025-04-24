@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ArticleCard = ({ article, token, onDeleted, hideActions = false }) => {
     const navigate = useNavigate();
+    
 
     const handleDelete = async () => {
         const confirmDelete = window.confirm("Are you sure you want to delete this article?");

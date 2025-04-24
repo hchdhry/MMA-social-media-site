@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
+import ArticleCard from '../Components/ArticleCard'; // Import the ArticleCard component
 
 const BrowseArticles = () => {
     const [articles, setArticles] = useState([]);
@@ -28,10 +29,6 @@ const BrowseArticles = () => {
         fetchArticles();
     }, []);
 
-    const handleReadMore = (article) => {
-        navigate(`/ReadArticle/${article.id}`, { state: { article } });
-    };
-
     return (
         <>
             <Header />
@@ -46,23 +43,11 @@ const BrowseArticles = () => {
                     ) : (
                         <div className="grid md:grid-cols-2 gap-6">
                             {articles.map((article) => (
-                                <div
+                                <ArticleCard
                                     key={article.id}
-                                    className="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700"
-                                >
-                                    <h2 className="text-2xl font-bold text-red-400 mb-2">{article.title}</h2>
-                                    <p className="text-gray-300 mb-4 break-words whitespace-pre-wrap">
-                                        {article.content.length > 300
-                                            ? article.content.slice(0, 300) + '...'
-                                            : article.content}
-                                    </p>
-                                    <button
-                                        onClick={() => handleReadMore(article)}
-                                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-                                    >
-                                        Read More
-                                    </button>
-                                </div>
+                                    article={article}
+                                    hideActions={true} // Use Read More button only
+                                />
                             ))}
                         </div>
                     )}
