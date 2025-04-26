@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Components/Header';
 import GymCard from '../Components/GymCard';
 
+
 const GymService = () => {
     const [fighters, setFighters] = useState([]);
     const jwtToken = localStorage.getItem("token");

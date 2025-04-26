@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import {toast} from 'sonner'
 
 const GymCard = ({ GymData }) => {
     const [showMore, setShowMore] = useState(false);
@@ -15,7 +16,7 @@ const GymCard = ({ GymData }) => {
 
     const handleClick = async () => {
         if (!jwtToken) {
-            alert("You must be logged in to perform this action.");
+            toast.error("You must be logged in to perform this action.");
             return;
         }
 
@@ -30,14 +31,14 @@ const GymCard = ({ GymData }) => {
             });
 
             if (response.ok) {
-                alert('Fighter removed from your favorites!');
+                toast.success('Fighter removed from your favorites!');
             } else {
                 const error = await response.json();
-                alert(`Error removing fighter from favorites: ${error.title}`);
+                toast.error(`Error removing fighter from favorites: ${error.title}`);
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred while removing the fighter from your favorites.');
+            toast.error('An error occurred while removing the fighter from your favorites.');
         }
     };
 

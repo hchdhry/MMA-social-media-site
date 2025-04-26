@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "../components/header";
+import Header from "../Components/Header";
 import { useNavigate, Link } from 'react-router-dom';
 
 const RegisterForm = () => {
