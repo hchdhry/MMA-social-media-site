@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const ArticleCard = ({ article, token, onDeleted, hideActions = false }) => {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ const ArticleCard = ({ article, token, onDeleted, hideActions = false }) => {
             onDeleted?.(article.id);
         } catch (err) {
             console.error('Delete failed:', err);
-            alert('Failed to delete the article.');
+            toast.error('Failed to delete the article.');
         }
     };
 
