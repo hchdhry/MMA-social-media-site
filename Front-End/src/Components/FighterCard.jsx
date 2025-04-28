@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 const FighterCard = ({ fighterData }) => {
     const [showMore, setShowMore] = useState(false);
@@ -19,7 +20,7 @@ const FighterCard = ({ fighterData }) => {
             });
 
             if (response.ok) {
-                alert('Fighter added to your favorites!');
+                toast.success('Fighter added to your favorites!');
             } else {
                 const error = await response.json();
                 alert(`Error adding fighter to favorites: ${error.title}`);
