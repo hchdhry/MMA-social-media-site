@@ -23,7 +23,7 @@ const FighterCard = ({ fighterData }) => {
                 toast.success('Fighter added to your favorites!');
             } else {
                 const error = await response.json();
-                alert(`Error adding fighter to favorites: ${error.title}`);
+                toast.error(`Error adding fighter to favorites: ${error.title}`);
             }
         } catch (error) {
             console.error('Error:', error);
