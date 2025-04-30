@@ -1,0 +1,130 @@
+public class Article
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public string UserId { get; set; }
+    public User User { get; set; }
+    public DateTime CreatedAt { get; set; }
+}
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace API.Models
+{
+
+    [Table("Comments")]
+    public class Comment
+    {
+        public int Id { get; set; }
+       // public User user { get; set; }
+       // public int UserId { get; set; }
+
+        public string Title { get; set; } = string.Empty;
+        public string Text { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public int FighterId { get; set; }
+        public Fighter fighter { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+
+    }
+}
+namespace API.Models;
+public class Events
+{
+    public int Id{get;set;}
+    public string Name {get;set;}
+    public DateTime Date{get;set;}
+}
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace API.Models
+{
+    public class Fighter
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; } = string.Empty;
+
+        public double Wins { get; set; } 
+        public double Losses { get; set; }
+
+        public double? Height { get; set; } // in cm
+        public double? Weight { get; set; } // in kg
+        public double? Reach { get; set; } // in cm
+
+        public string? Stance { get; set; } = string.Empty;
+        public double? Age { get; set; }
+
+        [Column("SLpM")]
+        public double? SignificantStrikesLandedPerMinute { get; set; }
+
+        [Column("SigStrAcc")]
+        public double? SignificantStrikeAccuracy { get; set; }
+
+        [Column("SApM")]
+        public double? StrikesAbsorbedPerMinute { get; set; }
+
+        [Column("StrDef")]
+        public double? StrikeDefense { get; set; }
+
+        [Column("TdAvg")]
+        public double? TakedownAverage { get; set; }
+
+        [Column("TdAcc")]
+        public double? TakedownAccuracy { get; set; }
+
+        [Column("TdDef")]
+        public double? TakedownDefense { get; set; }
+
+        [Column("SubAvg")]
+        public double? SubmissionAverage { get; set; }
+
+        public List<Comment> Comments { get; set; } = new List<Comment>();
+        public List<Gym> gyms { get; set; } = new List<Gym>();
+    }
+}
+
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace API.Models;
+[Table("Gym")]
+public class Gym
+{
+    public User user { get; set; }
+    public string UserId { get; set; }
+    public Fighter Fighter { get; set; }
+    public int FighterId { get; set; }
+}
+namespace API.Models;
+public class QueryObject
+{
+    public string? NameQuery { get; set; }
+    public int PageSize { get; set; } = 20;
+    public int PageNumber { get; set; } = 1;
+    public bool OrderByWins { get; set; } = false;
+    public bool OrderAlphabatically { get; set; } = false;
+
+}
+using API.Models;
+using Microsoft.AspNetCore.Identity;
+
+public class User:IdentityUser
+{
+    public List<Gym> Gyms { get; set; } = new List<Gym>();
+    
+}
+namespace API;
+
+public class UserConnection
+{
+    public string EventName { get; set; } = string.Empty;
+    public string UserName { get; set; } = string.Empty;
+    public string ConnectionId { get; set; }
+
+
+}
+pg_dump -h localhost -p 5432 -d MMA -U postgres -s -F p -E UTF-8 -f /Users/hassan/Desktop/DBDump/MMABackUp.sql 
