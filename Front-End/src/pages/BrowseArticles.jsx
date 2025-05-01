@@ -46,7 +46,7 @@ const BrowseArticles = () => {
                                 <ArticleCard
                                     key={article.id}
                                     article={article}
-                                    hideActions={true} // Use Read More button only
+                                    hideActions={true} 
                                 />
                             ))}
                         </div>
