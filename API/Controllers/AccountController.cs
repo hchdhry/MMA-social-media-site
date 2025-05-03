@@ -3,6 +3,8 @@ using API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API.Services;
+using API.Interfaces;
 
 namespace API.Controllers
 {
@@ -11,12 +13,15 @@ namespace API.Controllers
     [Route("api/Account")]
     public class AccountController : ControllerBase
     {
+
+        private readonly IEmailSender _emailSender;
         private readonly UserManager<User> _userManager;
         private readonly ITokenService _TokenService;
         private readonly SignInManager<User> _SignInManager;
 
-        public AccountController(UserManager<User> userManager, ITokenService tokenService, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, ITokenService tokenService, SignInManager<User> signInManager,IEmailSender emailSender)
         {
+            _emailSender = emailSender;
             _userManager = userManager;
             _TokenService = tokenService;
             _SignInManager = signInManager;
@@ -44,6 +49,9 @@ namespace API.Controllers
                     var role = await _userManager.AddToRoleAsync(appUser, "USER");
                     if (role.Succeeded)
                     {
+                        string emailBody = $"Hello {appUser.UserName}, 🎉We're excited to have you on board.You’ve successfully created your account, and you’re now part of a growing community focused on connecting fight fans";
+                        string emailTitle = "Welcome to The FightClub 🎉!";
+                        await _emailSender.SendEmailAsync(appUser.Email,emailTitle,emailBody);
 
                         return Ok(new NewUserDto
                         {
