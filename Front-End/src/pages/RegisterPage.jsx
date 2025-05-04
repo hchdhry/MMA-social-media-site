@@ -102,7 +102,7 @@ const RegisterForm = () => {
                                         className="w-full px-4 py-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                         placeholder="Create a password"
                                     />
-                                    <p className="text-xs text-gray-500 mt-2">Password must be at least 8 characters long</p>
+                                  
                                 </div>
 
                                 <button
@@ -129,3 +129,4 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
+

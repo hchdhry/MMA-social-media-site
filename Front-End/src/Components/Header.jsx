@@ -109,7 +109,7 @@ const Header = () => {
                     </li>
 
                     {/* Admin Dropdown */}
-                    {userDetails.role === "Admin" && (
+                    {Array.isArray(userDetails.role) && userDetails.role.includes("Admin") &&(
                         <li
                             className="relative group"
                             onMouseEnter={() => {
@@ -136,6 +136,9 @@ const Header = () => {
                                 </Link>
                                 <Link to="/FighterDelete" className="block px-4 py-2 text-sm hover:bg-gray-700">
                                     Delete Fighter
+                                </Link>
+                                <Link to="/AdminDashboard" className="block px-4 py-2 text-sm hover:bg-gray-700">
+                                    Admin Dashboard
                                 </Link>
                             </div>
                         </li>
