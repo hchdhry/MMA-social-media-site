@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "../Components/Header";
+import Footer from "../Components/Footer";
 import { useNavigate, Link } from 'react-router-dom';
 
 const RegisterForm = () => {
@@ -124,6 +125,7 @@ const RegisterForm = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </>
     );
 };
