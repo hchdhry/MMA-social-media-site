@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../components/header';
+import Footer from '../components/footer';
 import { useNavigate, Link } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -112,6 +113,7 @@ const LoginPage = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 };
