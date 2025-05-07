@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../Components/header';
+import Header from '../components/header';
+import Footer from '../components/footer';
 import CommentItem from '../Components/CommentItems';
+
 
 const CommentsPage = () => {
     const fighterId = useParams().fighterId;
@@ -121,6 +123,7 @@ const CommentsPage = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 };
