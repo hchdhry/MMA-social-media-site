@@ -32,6 +32,18 @@ const CommentsPage = () => {
             setError({ general: 'An error occurred while fetching comments.' });
         }
     };
+    const validate = () => 
+        {
+            const newErrors = {};
+            if (newComment.title.trim().length < 5) {
+                newErrors.title = 'Title must be at least 5 characters.';
+            }
+            if (newComment.text.trim().length < 20) {
+                newErrors.text = 'Text must be at least 20 characters.';
+            }
+            setError(newErrors);
+            return Object.keys(newErrors).length === 0;
+        }
 
     useEffect(() => {
         fetchComments();
@@ -47,6 +59,8 @@ const CommentsPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validate()) return;
+        
         setError({});
 
         try {
