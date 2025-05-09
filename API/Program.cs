@@ -67,17 +67,17 @@ builder.Services.AddIdentity<User, IdentityRole>(Options =>
 }).AddEntityFrameworkStores<ApplicationDBContext>();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReact",
-        builder =>
-        {
-            builder
-            .WithOrigins("http://localhost:5173")
+    options.AddPolicy("AllowLocalhost", policy =>
+    {
+        policy
+            .SetIsOriginAllowed(origin =>
+                origin.StartsWith("http://localhost") || origin.StartsWith("https://localhost"))
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
-
-        });
+    });
 });
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme =
@@ -109,6 +109,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors("AllowReact");
+app.UseCors("AllowLocalhost");
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapHub<ChatHub>("/chat");

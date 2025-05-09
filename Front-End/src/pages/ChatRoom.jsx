@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { jwtDecode } from "jwt-decode";
 import ChatRoomComment from "../Components/ChatRoomComment";
-import Header from '../Components/Header';
-import Footer from '../Components/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 const useChatConnection = (eventName, userName) => {
     const [connection, setConnection] = useState(null);
     const [error, setError] = useState('');
@@ -99,8 +99,18 @@ const ChatRoom = () => {
             console.log(e);
         }
     };
+    const validate = () => {
+        if (message.trim().length < 1) {
+            setError('Message cannot be empty.');
+            return false;
+        }
+        setError('');
+        return true;
+    }
+
 
     const sendMessage = async () => {
+        if (!validate()) return;
         if (connection) {
             try {
                 await connection.invoke("SendMessage", { UserName: userName, EventName: eventName }, message);

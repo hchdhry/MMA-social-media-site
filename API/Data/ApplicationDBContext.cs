@@ -20,7 +20,7 @@ public class ApplicationDBContext : IdentityDbContext<User>
     {
         base.OnModelCreating(builder);
         builder.Entity<UserConnection>()
-            .HasKey(uc => uc.ConnectionId);
+            .HasKey(uc => uc.Id);
         builder.Entity<Gym>().HasKey(g => new { g.UserId, g.FighterId });
         builder.Entity<Gym>().HasOne(g => g.user).WithMany(u => u.Gyms).HasForeignKey(g => g.UserId); 
 

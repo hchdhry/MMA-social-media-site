@@ -90,6 +90,7 @@ public class ChatHub : Hub
             {
                 if (existingConnection.ConnectionId != Context.ConnectionId)
                 {
+                    
                     existingConnection.ConnectionId = Context.ConnectionId;
                     await _db.SaveChangesAsync();
                 }
