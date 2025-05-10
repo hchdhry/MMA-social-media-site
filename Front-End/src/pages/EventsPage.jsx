@@ -63,7 +63,7 @@ const EventsPage = () => {
                 </div>
             )}
         </div>
-        <Footer/>
+       
         </>
     );
 };
