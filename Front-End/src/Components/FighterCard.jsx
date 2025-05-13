@@ -27,7 +27,7 @@ const FighterCard = ({ fighterData }) => {
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred while adding the fighter to your favorites.');
+            toast.error('An error occurred while adding the fighter to your favorites.');
         }
     };
 
