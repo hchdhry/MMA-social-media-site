@@ -78,6 +78,7 @@ const Header = () => {
                     </li>
 
                     {/* Fighters Dropdown */}
+                    
                     <li
                         className="relative group"
                         onMouseEnter={() => {
@@ -99,14 +100,20 @@ const Header = () => {
                             <Link to="/fighters" className="block px-4 py-2 text-sm hover:bg-gray-700">
                                 All Fighters
                             </Link>
-                            <Link to="/Gym" className="block px-4 py-2 text-sm hover:bg-gray-700">
-                                Your Gym
-                            </Link>
-                            <Link to="/ManageArticles" className="block px-4 py-2 text-sm hover:bg-gray-700">
-                                Your Articles
-                            </Link>
+                            {userDetails.role && (
+                                <>
+                                    <Link to="/Gym" className="block px-4 py-2 text-sm hover:bg-gray-700">
+                                        Your Gym
+                                    </Link>
+                                    <Link to="/ManageArticles" className="block px-4 py-2 text-sm hover:bg-gray-700">
+                                        Your Articles
+                                    </Link>
+                                </>
+                            )}
+
                         </div>
                     </li>
+
 
                     {/* Admin Dropdown */}
                     {Array.isArray(userDetails.role) && userDetails.role.includes("Admin") &&(
