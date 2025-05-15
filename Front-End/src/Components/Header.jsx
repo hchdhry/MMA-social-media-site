@@ -100,7 +100,7 @@ const Header = () => {
                             <Link to="/fighters" className="block px-4 py-2 text-sm hover:bg-gray-700">
                                 All Fighters
                             </Link>
-                            {userDetails.role && (
+                            {userDetails.username && (
                                 <>
                                     <Link to="/Gym" className="block px-4 py-2 text-sm hover:bg-gray-700">
                                         Your Gym
