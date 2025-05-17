@@ -22,9 +22,9 @@ public class ApplicationDBContext : IdentityDbContext<User>
         builder.Entity<UserConnection>()
             .HasKey(uc => uc.Id);
         builder.Entity<Gym>().HasKey(g => new { g.UserId, g.FighterId });
-        builder.Entity<Gym>().HasOne(g => g.user).WithMany(u => u.Gyms).HasForeignKey(g => g.UserId); 
+        builder.Entity<Gym>().HasOne(g => g.user).WithMany(u => u.Gyms).HasForeignKey(g => g.UserId);
 
-    
+
         List<IdentityRole> roles = new List<IdentityRole>
             {
                 new IdentityRole

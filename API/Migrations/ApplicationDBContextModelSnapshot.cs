@@ -52,7 +52,7 @@ namespace API.Migrations
 
                     b.HasIndex("FighterId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Events", b =>
@@ -72,7 +72,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Fighter", b =>
@@ -142,7 +142,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Fighters");
+                    b.ToTable("Fighters", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Gym", b =>
@@ -157,7 +157,7 @@ namespace API.Migrations
 
                     b.HasIndex("FighterId");
 
-                    b.ToTable("Gym");
+                    b.ToTable("Gym", (string)null);
                 });
 
             modelBuilder.Entity("API.UserConnection", b =>
@@ -182,7 +182,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserConnections");
+                    b.ToTable("UserConnections", (string)null);
                 });
 
             modelBuilder.Entity("Article", b =>
@@ -212,7 +212,7 @@ namespace API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

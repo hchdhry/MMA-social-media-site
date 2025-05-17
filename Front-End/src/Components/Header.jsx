@@ -116,7 +116,7 @@ const Header = () => {
 
 
                     {/* Admin Dropdown */}
-                    {Array.isArray(userDetails.role) && userDetails.role.includes("Admin") &&(
+                    {userDetails.role == "Admin" &&(
                         <li
                             className="relative group"
                             onMouseEnter={() => {
