@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../Components/Header';
 import GymCard from '../Components/GymCard';
+import Footer from '../components/Footer';
 
 
 const GymService = () => {
@@ -57,6 +58,7 @@ const GymService = () => {
                     </section>
                 </main>
             </div>
+            <Footer />
         </div>
     );
 };

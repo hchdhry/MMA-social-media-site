@@ -150,7 +150,7 @@ const ChatRoom = () => {
                 <button onClick={sendMessage} className="p-2 bg-green-500 text-white rounded">Send</button>
             </div>
         </div>
-        
+        <Footer/>
        </>
     );
 };
