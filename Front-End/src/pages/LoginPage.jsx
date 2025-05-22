@@ -41,7 +41,7 @@ const LoginPage = () => {
                 setError("Invalid username or password. Please try again.");
             }
         } catch (error) {
-            setError("Connection error. Please check your internet connection and try again.");
+            setError("Invalid username or password. Please try again.");
         }
     };
 
