@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import { useNavigate, Link } from 'react-router-dom';
+import { string } from 'yup';
 
 const LoginPage = () => {
     const [error, setError] = useState(null);
